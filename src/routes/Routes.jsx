@@ -4,22 +4,39 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "../pages/auth/Login";
 import ExamScreen from "../pages/candidate/ExamScreen";
+import BasicInfo from "../pages/employer/BasicInfo.jsx";
 import EmployerDashboard from "../pages/employer/Dashboard";
 import CandidateDashboard from "../pages/candidate/Dashboard";
-import ManageOnlineTest from "../pages/employer/ManageOnlineTest";
+import ManageOnlineTest from "../pages/employer/QuestionBuilder.jsx";
 
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
-
+      <Route
+        path="/login"
+        element={
+          <Layout>
+            <Login />
+          </Layout>
+        }
+      />
       <Route
         path="/employer/dashboard"
         element={
           <ProtectedRoute allowedRole="employer">
-            <Layout>
+            <Layout pageTitle="Dashboard">
               <EmployerDashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/employer/basic-info"
+        element={
+          <ProtectedRoute allowedRole="employer">
+            <Layout>
+              <BasicInfo />
             </Layout>
           </ProtectedRoute>
         }
@@ -38,7 +55,7 @@ function AppRoutes() {
         path="/candidate/dashboard"
         element={
           <ProtectedRoute allowedRole="candidate">
-            <Layout>
+            <Layout pageTitle="Dashboard">
               <CandidateDashboard />
             </Layout>
           </ProtectedRoute>
