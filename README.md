@@ -12,7 +12,7 @@ A simplified Online Assessment Platform built as a frontend engineering task. Th
 
 ## Video Walkthrough
 
-> Coming Soon
+> [https://drive.google.com/file/d/1uAm6dRVkqp1Ri2F53Tn_B8WxJTVc2K1z/view?usp=sharing](https://drive.google.com/file/d/1uAm6dRVkqp1Ri2F53Tn_B8WxJTVc2K1z/view?usp=sharing)
 
 ---
 
