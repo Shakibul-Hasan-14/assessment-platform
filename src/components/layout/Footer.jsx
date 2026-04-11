@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer className="w-full bg-[#130B2C] shadow-[0px_2.71px_4.4px_0px_#C0C0C007,0px_6.86px_11.12px_0px_#C0C0C00A,0px_14px_22.68px_0px_#C0C0C00C,0px_28.84px_46.72px_0px_#C0C0C00F,0px_79px_128px_0px_#C0C0C017]">
-      <div className="max-w-7xl w-full mx-auto py-5 md:py-0 md:h-20 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
+      <div className="max-w-7xl w-full mx-auto py-5 md:py-0 md:h-20 flex flex-col md:flex-row md:items-center px-3 lg:px-0 justify-between gap-4 md:gap-0">
         {/* Left — Powered by + Logo */}
         <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
           <span className="font-normal text-base md:text-xl leading-[130%] text-white">

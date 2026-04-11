@@ -25,13 +25,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-[#F8FAFC]">
-      <div className="w-full max-w-142.75 flex flex-col items-center gap-6 px-4">
-        <h2 className="font-semibold text-[24px] leading-[130%] text-[#334155]">
+    <div className="flex-1 flex flex-col items-center justify-center bg-[#F8FAFC] px-4 py-10">
+      <div className="w-full max-w-142.75 flex flex-col items-center gap-6">
+        <h2 className="font-semibold text-xl md:text-[24px] leading-[130%] text-[#334155]">
           Sign In
         </h2>
 
-        <div className="w-full bg-white border border-[#E5E7EB] rounded-2xl px-8 pt-8 pb-10 shadow-sm">
+        <div className="w-full bg-white border border-[#E5E7EB] rounded-2xl px-5 pt-6 pb-8 md:px-8 md:pt-8 md:pb-10 shadow-sm">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-5"

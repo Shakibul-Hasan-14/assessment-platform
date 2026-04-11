@@ -16,13 +16,14 @@ const EmployerDashboard = () => {
   } = useTests();
 
   return (
-    <div className="max-w-7xl w-full h-full mx-auto flex-1 py-10 flex flex-col gap-8">
+    <div className="max-w-7xl w-full mx-auto flex-1 px-4 md:px-6 lg:px-8 py-6 md:py-10 flex flex-col gap-6 md:gap-8">
       {/* Top Bar */}
-      <div className="flex items-center justify-between">
-        <h2 className="font-semibold text-[24px] leading-[130%] text-[#334155]">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <h2 className="font-semibold text-xl md:text-[24px] leading-[130%] text-[#334155]">
           Online Tests
         </h2>
-        <div className="flex items-center">
+
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           {/* Search */}
           <div className="relative p-px rounded-xl bg-linear-to-r from-[#A086F7] via-[#ECDBFF] via-[15.72%] to-[#B199FF]">
             <input
@@ -33,10 +34,8 @@ const EmployerDashboard = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-155.25 h-12 pl-4 pr-11 rounded-[11px] bg-white focus:outline-none text-[14px] placeholder:text-[#94A3B8] block"
+              className="w-full sm:w-72 lg:w-107.5 h-12 pl-4 pr-11 rounded-[11px] bg-white focus:outline-none text-[14px] placeholder:text-[#94A3B8] block"
             />
-
-            {/* Search Icon */}
             <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6633FF]">
               <svg
                 className="w-5 h-5"
@@ -53,43 +52,43 @@ const EmployerDashboard = () => {
               </svg>
             </div>
           </div>
-        </div>
 
-        <div>
           <button
             onClick={() => navigate("/employer/manage-test/basic-info")}
-            className="cursor-pointer h-12 px-6 bg-[#6633FF] text-white font-semibold text-[16px] rounded-xl hover:bg-[#5522EE] transition-all"
+            className="cursor-pointer h-12 px-6 bg-[#6633FF] text-white font-semibold text-[16px] rounded-xl hover:bg-[#5522EE] transition-all whitespace-nowrap"
           >
             Create Online Test
           </button>
         </div>
       </div>
 
-      {/* States */}
+      {/* Loading */}
       {loading && (
         <div className="flex-1 flex items-center justify-center text-[#94A3B8] text-sm">
           Loading tests...
         </div>
       )}
 
+      {/* Error */}
       {error && (
         <div className="w-full px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
           {error}
         </div>
       )}
 
+      {/* Empty state */}
       {!loading && !error && tests.length === 0 && (
-        <div className="h-60 bg-white rounded-lg p-5 gap-5">
-          <div className="flex-1 flex flex-col items-center text-[#334155] text-sm h-full gap-3">
+        <div className="bg-white rounded-lg p-5">
+          <div className="flex flex-col items-center justify-center text-[#334155] h-full gap-3 py-10">
             <img
               src="/icons/no-data.svg"
               alt="No Data"
-              className="h-30 aspect-square"
+              className="h-24 md:h-30 aspect-square"
             />
-            <span className="font-semibold text-[20px] leading-[140%]">
+            <span className="font-semibold text-lg md:text-[20px] leading-[140%]">
               No Online Test Available
             </span>
-            <span className="text-[14px] text-[#64748B]">
+            <span className="text-[14px] text-[#64748B] text-center max-w-sm">
               Currently, there are no online tests available. Please check back
               later for updates.
             </span>
@@ -99,7 +98,7 @@ const EmployerDashboard = () => {
 
       {/* Cards Grid */}
       {!loading && !error && tests.length > 0 && (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {tests.map((test) => (
             <TestCard
               key={test.id}
@@ -114,9 +113,8 @@ const EmployerDashboard = () => {
 
       {/* Pagination */}
       {!loading && !error && tests.length > 0 && (
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mt-4">
           <div className="flex gap-2">
-            {/* Prev Button */}
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page <= 1}
@@ -125,7 +123,6 @@ const EmployerDashboard = () => {
               {"<"}
             </button>
 
-            {/* Page Numbers */}
             {totalPages <= 0 ? (
               <button className="w-8 h-8 flex items-center justify-center border border-[#6633FF] rounded font-bold text-sm text-[#6633FF]">
                 1
@@ -136,14 +133,13 @@ const EmployerDashboard = () => {
                   key={p}
                   onClick={() => setPage(p)}
                   className={`w-8 h-8 flex items-center justify-center border rounded font-bold text-sm cursor-pointer
-            ${page === p ? "border-[#6633FF] text-[#6633FF]" : "border-[#E5E7EB] text-gray-400 bg-white"}`}
+                    ${page === p ? "border-[#6633FF] text-[#6633FF]" : "border-[#E5E7EB] text-gray-400 bg-white"}`}
                 >
                   {p}
                 </button>
               ))
             )}
 
-            {/* Next Button */}
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page >= totalPages || totalPages <= 1}
@@ -153,11 +149,10 @@ const EmployerDashboard = () => {
             </button>
           </div>
 
-          {/* Per Page Indicator */}
           <div className="flex text-[14px] text-[#666666] items-center">
-            Online Test Per Page{" "}
+            Online Test Per Page
             <span className="flex ml-2 font-semibold p-1 rounded bg-white items-center gap-2.5 px-2.5">
-              8{" "}
+              8
               <img
                 src="/icons/up-arrow.svg"
                 alt="Up Arrow"

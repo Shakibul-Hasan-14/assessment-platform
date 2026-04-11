@@ -16,47 +16,46 @@ const BasicInfo = () => {
   } = useBasicInfo();
 
   return (
-    <div className="flex-1 bg-[#F8FAFC] px-20 py-8 flex flex-col gap-6">
+    <div className="flex-1 bg-[#F8FAFC] px-4 md:px-8 lg:px-20 py-6 md:py-8 flex flex-col gap-6">
       {/* Header Card */}
-      <div className="max-w-7xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col gap-6">
-        <h2 className="text-[20px] font-semibold text-[#334155]">
+      <div className="max-w-7xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl p-4 md:p-6 flex flex-col gap-4 md:gap-6">
+        <h2 className="text-lg md:text-[20px] font-semibold text-[#334155]">
           Manage Online Test
         </h2>
 
         {/* Stepper */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-10">
-            {/* Step 1 */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
+          <div className="flex items-center gap-4 md:gap-10">
             <button
               type="button"
               onClick={() =>
                 navigate("/employer/manage-test/basic-info?mode=view")
               }
-              className="flex items-center gap-3"
+              className="flex items-center gap-2 md:gap-3"
             >
-              <div className="w-8 h-8 bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
+              <div className="w-8 h-8 bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px] shrink-0">
                 1
               </div>
-              <span className="text-[#6633FF] font-semibold text-[14px]">
+              <span className="text-[#6633FF] font-semibold text-[13px] md:text-[14px]">
                 Basic Info
               </span>
             </button>
 
-            <div className="h-px w-16 bg-[#E5E7EB]" />
+            <div className="h-px w-8 md:w-16 bg-[#E5E7EB]" />
 
-            {/* Step 2 */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#E2E8F0] text-[#64748B] rounded-full flex items-center justify-center font-bold text-[14px]">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 bg-[#E2E8F0] text-[#64748B] rounded-full flex items-center justify-center font-bold text-[14px] shrink-0">
                 2
               </div>
-              <span className="text-[#64748B] font-medium text-[14px]">
+              <span className="text-[#64748B] font-medium text-[13px] md:text-[14px]">
                 Questions
               </span>
             </div>
           </div>
+
           <button
             onClick={() => navigate("/employer/dashboard")}
-            className="cursor-pointer px-5 py-2.5 border border-[#E5E7EB] rounded-xl text-[#475569] text-[14px] font-medium hover:bg-gray-50"
+            className="cursor-pointer self-start sm:self-auto px-4 md:px-5 py-2 md:py-2.5 border border-[#E5E7EB] rounded-xl text-[#475569] text-[13px] md:text-[14px] font-medium hover:bg-gray-50"
           >
             Back to Dashboard
           </button>
@@ -66,10 +65,9 @@ const BasicInfo = () => {
       {/* View Mode */}
       {isViewMode && basicInfo ? (
         <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">
-          <div className="p-8 flex flex-col gap-6">
-            {/* View Header */}
+          <div className="p-4 md:p-8 flex flex-col gap-6">
             <div className="flex justify-between items-center">
-              <h3 className="text-[18px] font-semibold text-[#334155]">
+              <h3 className="text-[16px] md:text-[18px] font-semibold text-[#334155]">
                 Basic Information
               </h3>
               <button
@@ -80,8 +78,8 @@ const BasicInfo = () => {
               </button>
             </div>
 
-            {/* Summary Grid */}
-            <div className="grid grid-cols-4 gap-y-8">
+            {/* Summary Grid — 2 cols on mobile, 4 on md+ */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-8">
               <SummaryItem
                 label="Online Test Title"
                 value={basicInfo.title}
@@ -107,11 +105,10 @@ const BasicInfo = () => {
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="px-8 py-6 border-t border-[#E5E7EB] flex justify-end">
+          <div className="px-4 md:px-8 py-4 md:py-6 border-t border-[#E5E7EB] flex justify-end">
             <button
               onClick={() => navigate("/employer/manage-test/questions")}
-              className="cursor-pointer px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
+              className="cursor-pointer px-8 md:px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
             >
               Continue to Questions
             </button>
@@ -121,13 +118,14 @@ const BasicInfo = () => {
         /* Edit Mode */
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">
-            <div className="p-8 flex flex-col gap-6">
-              <h3 className="text-[18px] font-semibold text-[#334155]">
+            <div className="p-4 md:p-8 flex flex-col gap-6">
+              <h3 className="text-[16px] md:text-[18px] font-semibold text-[#334155]">
                 Basic Information
               </h3>
 
-              <div className="grid grid-cols-2 gap-x-6 gap-y-5">
-                <div className="col-span-2">
+              {/* 1 col mobile, 2 col md+ */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+                <div className="md:col-span-2">
                   <FormInput
                     label="Online Test Title"
                     type="text"
@@ -183,8 +181,9 @@ const BasicInfo = () => {
                 </FormSelect>
               </div>
 
-              <div className="grid grid-cols-5 gap-x-6">
-                <div className="col-span-2">
+              {/* Time row — stacks on mobile, 5 cols on lg */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-5">
+                <div className="sm:col-span-1 lg:col-span-2">
                   <FormInput
                     label="Start Time"
                     type="time"
@@ -193,7 +192,7 @@ const BasicInfo = () => {
                     {...register("startTime")}
                   />
                 </div>
-                <div className="col-span-2">
+                <div className="sm:col-span-1 lg:col-span-2">
                   <FormInput
                     label="End Time"
                     type="time"
@@ -202,7 +201,7 @@ const BasicInfo = () => {
                     {...register("endTime")}
                   />
                 </div>
-                <div className="col-span-1">
+                <div className="sm:col-span-2 lg:col-span-1">
                   <FormInput
                     label="Duration"
                     type="text"
@@ -217,17 +216,17 @@ const BasicInfo = () => {
           </div>
 
           {/* Footer */}
-          <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl px-8 py-6 flex justify-between">
+          <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl px-4 md:px-8 py-4 md:py-6 flex justify-between">
             <button
               type="button"
               onClick={() => navigate("/employer/dashboard")}
-              className="cursor-pointer px-12 py-3 border border-[#E5E7EB] rounded-xl text-[#475569] font-semibold hover:bg-gray-50 transition-all"
+              className="cursor-pointer px-6 md:px-12 py-3 border border-[#E5E7EB] rounded-xl text-[#475569] font-semibold hover:bg-gray-50 transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="cursor-pointer px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
+              className="cursor-pointer px-6 md:px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
             >
               Save & Continue
             </button>
@@ -240,12 +239,12 @@ const BasicInfo = () => {
 
 const SummaryItem = ({ label, value, fullWidth }) => (
   <div
-    className={`${fullWidth ? "col-span-4" : "col-span-1"} flex flex-col gap-1`}
+    className={`${fullWidth ? "col-span-2 md:col-span-4" : "col-span-1"} flex flex-col gap-1`}
   >
-    <span className="text-[14px] text-[#94A3B8] font-medium tracking-wider">
+    <span className="text-[13px] md:text-[14px] text-[#94A3B8] font-medium tracking-wider">
       {label}
     </span>
-    <span className="text-[16px] text-[#334155] font-semibold">
+    <span className="text-[15px] md:text-[16px] text-[#334155] font-semibold">
       {value || "—"}
     </span>
   </div>
