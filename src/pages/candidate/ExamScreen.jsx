@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import useExam from "../../hooks/useExam";
 
 const ExamScreen = () => {
@@ -37,26 +36,26 @@ const ExamScreen = () => {
   return (
     <div className="flex-1 bg-[#F8FAFC] min-h-screen flex flex-col">
       {/* Exam Header */}
-      <div className="bg-white px-[80px] py-[20px] flex justify-center items-center border-b border-[#E5E7EB]">
+      <div className="bg-white px-20 py-5 flex justify-center items-center border-b border-[#E5E7EB]">
         <h1 className="text-[20px] font-bold text-[#334155]">Akij Resource</h1>
       </div>
 
       {/* Behavioral warnings banner */}
       {warnings.length > 0 && (
-        <div className="bg-red-50 border-b border-red-200 px-[80px] py-2 text-red-600 text-sm">
+        <div className="bg-red-50 border-b border-red-200 px-20 py-2 text-red-600 text-sm">
           ⚠️ Warning: Suspicious activity detected ({warnings.length} time
           {warnings.length > 1 ? "s" : ""})
         </div>
       )}
 
-      <div className="flex-1 px-[80px] py-[40px] flex flex-col items-center gap-[24px]">
+      <div className="flex-1 px-20 py-10 flex flex-col items-center gap-6">
         {/* Question Counter & Timer */}
-        <div className="w-full max-w-[800px] bg-white border border-[#E5E7EB] rounded-[16px] p-[24px] flex justify-between items-center">
+        <div className="w-full max-w-200 bg-white border border-[#E5E7EB] rounded-2xl p-6 flex justify-between items-center">
           <span className="text-[18px] font-semibold text-[#334155]">
             Question ({activeQuestion + 1}/{totalQuestions})
           </span>
           <div
-            className={`px-[24px] py-[12px] rounded-[12px] flex items-center gap-2 transition-all
+            className={`px-6 py-3 rounded-xl flex items-center gap-2 transition-all
             ${isWarning ? "bg-red-50 border border-red-200" : "bg-[#F1F5F9]"}`}
           >
             <span
@@ -68,14 +67,14 @@ const ExamScreen = () => {
         </div>
 
         {/* Question Card */}
-        <div className="w-full max-w-[800px] bg-white border border-[#E5E7EB] rounded-[24px] p-[40px] flex flex-col gap-[32px]">
+        <div className="w-full max-w-200 bg-white border border-[#E5E7EB] rounded-3xl p-10 flex flex-col gap-8">
           <h2 className="text-[20px] font-semibold text-[#334155]">
             Q{activeQuestion + 1}. {question.title}
           </h2>
 
           {/* Options */}
           {question.type !== "paragraph" && (
-            <div className="flex flex-col gap-[16px]">
+            <div className="flex flex-col gap-4">
               {question.options.map((opt, i) => {
                 const isChecked =
                   question.type === "checkbox"
@@ -107,7 +106,7 @@ const ExamScreen = () => {
                 handleAnswer(question.id, e.target.value, "paragraph")
               }
               placeholder="Type your answer here..."
-              className="w-full h-[160px] p-4 border border-[#E5E7EB] rounded-xl outline-none focus:border-[#6633FF] resize-none transition-all"
+              className="w-full h-40 p-4 border border-[#E5E7EB] rounded-xl outline-none focus:border-[#6633FF] resize-none transition-all"
             />
           )}
 
@@ -116,13 +115,13 @@ const ExamScreen = () => {
             <button
               onClick={handleSkip}
               disabled={isLastQuestion}
-              className="px-[24px] py-[14px] border border-[#E5E7EB] rounded-[12px] text-[#475569] font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-6 py-3.5 border border-[#E5E7EB] rounded-xl text-[#475569] font-semibold hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Skip this Question
             </button>
             <button
               onClick={handleNext}
-              className="px-[40px] py-[14px] bg-[#6633FF] text-white rounded-[12px] font-bold hover:bg-[#5522EE] transition-all shadow-lg shadow-[#6633FF]/20"
+              className="px-10 py-3.5 bg-[#6633FF] text-white rounded-xl font-bold hover:bg-[#5522EE] transition-all shadow-lg shadow-[#6633FF]/20"
             >
               {isLastQuestion ? "Submit Exam" : "Save & Continue"}
             </button>
@@ -130,7 +129,7 @@ const ExamScreen = () => {
         </div>
 
         {/* Question Navigation Pills */}
-        <div className="w-full max-w-[800px] bg-white border border-[#E5E7EB] rounded-[16px] p-[24px]">
+        <div className="w-full max-w-200 bg-white border border-[#E5E7EB] rounded-2xl p-6">
           <p className="text-sm text-[#94A3B8] mb-3">Question Navigator</p>
           <div className="flex flex-wrap gap-2">
             {activeTest.questions.map((q, i) => (
@@ -159,7 +158,7 @@ const ExamScreen = () => {
 const OptionItem = ({ type, label, id, name, checked, onChange }) => (
   <label
     htmlFor={id}
-    className={`flex items-center gap-[16px] p-[20px] border rounded-[12px] cursor-pointer transition-all group
+    className={`flex items-center gap-4 p-5 border rounded-xl cursor-pointer transition-all group
       ${checked ? "border-[#6633FF] bg-[#6633FF]/5" : "border-[#E5E7EB] hover:border-[#6633FF]"}`}
   >
     <input
@@ -168,7 +167,7 @@ const OptionItem = ({ type, label, id, name, checked, onChange }) => (
       name={name}
       checked={checked}
       onChange={onChange}
-      className="w-[20px] h-[20px] accent-[#6633FF]"
+      className="w-5 h-5 accent-[#6633FF]"
     />
     <span
       className={`text-[16px] ${checked ? "text-[#334155] font-medium" : "text-[#475569] group-hover:text-[#334155]"}`}
@@ -180,19 +179,19 @@ const OptionItem = ({ type, label, id, name, checked, onChange }) => (
 
 const TestCompletedScreen = ({ user, test, onBack }) => (
   <div className="flex-1 bg-[#F8FAFC] flex flex-col items-center justify-center p-6 text-center min-h-screen">
-    <div className="bg-white p-[60px] rounded-[32px] border border-[#E5E7EB] shadow-sm max-w-[900px] w-full flex flex-col items-center gap-6">
-      <div className="w-[64px] h-[64px] bg-[#3B82F6] text-white rounded-full flex items-center justify-center text-[32px]">
+    <div className="bg-white p-15 rounded-4xl border border-[#E5E7EB] shadow-sm max-w-225 w-full flex flex-col items-center gap-6">
+      <div className="w-16 h-16 bg-[#3B82F6] text-white rounded-full flex items-center justify-center text-[32px]">
         ✓
       </div>
       <h2 className="text-[28px] font-bold text-[#334155]">Test Completed</h2>
-      <p className="text-[#64748B] text-[18px] max-w-[600px] leading-relaxed">
+      <p className="text-[#64748B] text-[18px] max-w-150 leading-relaxed">
         Congratulations! {user?.name}, you have completed your exam for{" "}
         <span className="font-semibold text-[#334155]">{test?.title}</span>.
         Thank you for participating.
       </p>
       <button
         onClick={onBack}
-        className="mt-4 px-[32px] py-[14px] border border-[#E5E7EB] rounded-[12px] font-semibold text-[#475569] hover:bg-gray-50"
+        className="mt-4 px-8 py-3.5 border border-[#E5E7EB] rounded-xl font-semibold text-[#475569] hover:bg-gray-50"
       >
         Back to Dashboard
       </button>
@@ -202,7 +201,7 @@ const TestCompletedScreen = ({ user, test, onBack }) => (
 
 const TimeoutModal = ({ user, onBack }) => (
   <div className="fixed inset-0 bg-[#334155]/60 flex items-center justify-center z-50">
-    <div className="bg-white p-[48px] rounded-[24px] max-w-[500px] w-full text-center flex flex-col items-center gap-4">
+    <div className="bg-white p-12 rounded-3xl max-w-125 w-full text-center flex flex-col items-center gap-4">
       <div className="w-16 h-16 rounded-full border-4 border-red-100 flex items-center justify-center text-red-500 text-2xl">
         🕒
       </div>

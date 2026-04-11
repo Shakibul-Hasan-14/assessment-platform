@@ -18,34 +18,34 @@ const QuestionBuilder = () => {
   } = useQuestionBuilder();
 
   return (
-    <div className="flex-1 bg-[#F8FAFC] px-[80px] py-[32px] flex flex-col gap-[24px]">
+    <div className="flex-1 bg-[#F8FAFC] px-20 py-8 flex flex-col gap-6">
       {/* Header Card */}
-      <div className="w-full bg-white border border-[#E5E7EB] rounded-[16px] p-[24px] flex flex-col gap-[24px]">
+      <div className="max-w-7xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <h2 className="text-[20px] font-semibold text-[#334155]">
             Manage Online Test
           </h2>
           <button
             onClick={() => navigate("/employer/dashboard")}
-            className="px-[20px] py-[10px] border border-[#E5E7EB] rounded-[12px] text-[#475569] font-medium hover:bg-gray-50"
+            className="px-5 py-2.5 border border-[#E5E7EB] rounded-xl text-[#475569] font-medium hover:bg-gray-50"
           >
             Back to Dashboard
           </button>
         </div>
 
         {/* Stepper */}
-        <div className="flex items-center gap-[40px]">
-          <div className="flex items-center gap-[12px]">
-            <div className="w-[32px] h-[32px] bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
               ✓
             </div>
             <span className="text-[#6633FF] font-semibold text-[14px]">
               Basic Info
             </span>
           </div>
-          <div className="h-[1px] w-[64px] bg-[#6633FF]" />
-          <div className="flex items-center gap-[12px]">
-            <div className="w-[32px] h-[32px] bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
+          <div className="h-px w-16 bg-[#6633FF]" />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
               2
             </div>
             <span className="text-[#6633FF] font-semibold text-[14px]">
@@ -64,12 +64,8 @@ const QuestionBuilder = () => {
 
       {/* Questions List */}
       {!loadingQuestions && (
-        <div className="flex flex-col gap-[20px]">
-          {questions.length === 0 && (
-            <div className="flex items-center justify-center py-10 text-[#94A3B8] text-sm">
-              No questions yet. Add your first question below.
-            </div>
-          )}
+        <div className="flex flex-col gap-5">
+          
           {questions.map((q, index) => (
             <QuestionItem
               key={q.id}
@@ -85,7 +81,7 @@ const QuestionBuilder = () => {
       {/* Add Question Button */}
       <button
         onClick={openAddModal}
-        className="w-full py-[16px] bg-[#6633FF] text-white rounded-[16px] font-bold text-[18px] shadow-lg hover:bg-[#5522EE] transition-all"
+        className="max-w-238.5 w-full mx-auto py-4 bg-[#6633FF] text-white rounded-2xl font-bold text-[18px] shadow-lg hover:bg-[#5522EE] transition-all"
       >
         Add Question
       </button>
@@ -104,7 +100,7 @@ const QuestionBuilder = () => {
 };
 
 const QuestionItem = ({ number, question, onEdit, onDelete }) => (
-  <div className="bg-white border border-[#E5E7EB] rounded-[16px] p-[32px] flex flex-col gap-[20px]">
+  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-8 flex flex-col gap-5">
     <div className="flex justify-between items-center">
       <span className="font-semibold text-[#334155]">Question {number}</span>
       <div className="flex gap-2">
@@ -117,11 +113,11 @@ const QuestionItem = ({ number, question, onEdit, onDelete }) => (
     <p className="font-bold text-[#334155] text-[16px]">{question.title}</p>
 
     {question.options && question.options.length > 0 && (
-      <div className="flex flex-col gap-[12px]">
+      <div className="flex flex-col gap-3">
         {question.options.map((opt, i) => (
           <div
             key={i}
-            className="p-[16px] rounded-[12px] border border-[#F1F5F9] bg-[#F8FAFC] flex justify-between items-center"
+            className="p-4 rounded-xl border border-[#F1F5F9] bg-[#F8FAFC] flex justify-between items-center"
           >
             <span className="text-[#64748B]">
               {String.fromCharCode(65 + i)}. {opt}
@@ -165,8 +161,8 @@ const QuestionModal = ({ editingQuestion, onSave, onSaveAndMore, onClose }) => {
   });
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
-      <div className="bg-white w-full max-w-[900px] max-h-[90vh] overflow-y-auto rounded-[24px] p-[32px] flex flex-col gap-[24px]">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-100 p-4">
+      <div className="bg-white w-full max-w-225 max-h-[90vh] overflow-y-auto rounded-3xl p-8 flex flex-col gap-6">
         {/* Modal Header */}
         <div className="flex justify-between items-center">
           <h3 className="font-semibold text-[18px] text-[#334155]">
@@ -176,7 +172,7 @@ const QuestionModal = ({ editingQuestion, onSave, onSaveAndMore, onClose }) => {
             <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="h-[40px] border border-[#E5E7EB] rounded-lg px-3 text-sm outline-none"
+              className="h-10 border border-[#E5E7EB] rounded-lg px-3 text-sm outline-none"
             >
               <option value="mcq">MCQ</option>
               <option value="checkbox">Checkbox</option>
@@ -198,7 +194,7 @@ const QuestionModal = ({ editingQuestion, onSave, onSaveAndMore, onClose }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Type your question here..."
-            className="w-full h-[120px] p-4 border border-[#E5E7EB] rounded-xl outline-none resize-none focus:border-[#6633FF] transition-all"
+            className="w-full h-30 p-4 border border-[#E5E7EB] rounded-xl outline-none resize-none focus:border-[#6633FF] transition-all"
           />
         </div>
 
@@ -218,7 +214,7 @@ const QuestionModal = ({ editingQuestion, onSave, onSaveAndMore, onClose }) => {
                   value={opt}
                   onChange={(e) => updateOption(i, e.target.value)}
                   placeholder={`Option ${String.fromCharCode(65 + i)}`}
-                  className="flex-1 h-[48px] px-4 border border-[#E5E7EB] rounded-xl outline-none focus:border-[#6633FF] transition-all"
+                  className="flex-1 h-12 px-4 border border-[#E5E7EB] rounded-xl outline-none focus:border-[#6633FF] transition-all"
                 />
                 {options.length > 2 && (
                   <button

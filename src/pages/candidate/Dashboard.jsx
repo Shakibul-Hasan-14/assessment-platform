@@ -29,9 +29,9 @@ const CandidateDashboard = () => {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-[430px] h-[48px] pl-[16px] pr-[44px] rounded-[12px] border border-[#E5E7EB] bg-white focus:outline-none focus:border-[#6633FF] text-[14px] placeholder:text-[#94A3B8]"
+            className="w-107.5 h-12 pl-4 pr-11 rounded-xl border border-[#E5E7EB] bg-white focus:outline-none focus:border-[#6633FF] text-[14px] placeholder:text-[#94A3B8]"
           />
-          <div className="absolute right-[16px] top-1/2 -translate-y-1/2 text-[#6633FF]">
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6633FF]">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -70,7 +70,7 @@ const CandidateDashboard = () => {
 
       {/* Cards */}
       {!loading && !error && tests.length > 0 && (
-        <div className="grid grid-cols-2 gap-[24px]">
+        <div className="grid grid-cols-2 gap-6">
           {tests.map((test) => (
             <CandidateTestCard
               key={test.id}
@@ -134,24 +134,24 @@ const CandidateTestCard = ({
   negativeMarking,
   onStart,
 }) => (
-  <div className="bg-white border border-[#E5E7EB] rounded-[16px] p-[24px] flex flex-col gap-[20px] shadow-sm hover:shadow-md transition-shadow">
+  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col gap-5 shadow-sm hover:shadow-md transition-shadow">
     <h3 className="font-semibold text-[18px] leading-[140%] text-[#334155]">
       {title}
     </h3>
-    <div className="flex items-center gap-[24px] text-[14px] text-[#64748B]">
-      <div className="flex items-center gap-[6px]">
+    <div className="flex items-center gap-6 text-[14px] text-[#64748B]">
+      <div className="flex items-center gap-1.5">
         <span>🕒</span>
         <span>
           Duration: <strong className="text-[#334155]">{duration}</strong>
         </span>
       </div>
-      <div className="flex items-center gap-[6px]">
+      <div className="flex items-center gap-1.5">
         <span>📄</span>
         <span>
           Question: <strong className="text-[#334155]">{questions}</strong>
         </span>
       </div>
-      <div className="flex items-center gap-[6px]">
+      <div className="flex items-center gap-1.5">
         <span>✖</span>
         <span>
           Negative Marking:{" "}
@@ -161,7 +161,7 @@ const CandidateTestCard = ({
     </div>
     <button
       onClick={onStart}
-      className="w-[140px] h-[40px] border border-[#6633FF] text-[#6633FF] font-semibold text-[14px] rounded-[8px] hover:bg-[#6633FF] hover:text-white transition-all"
+      className="w-35 h-10 border border-[#6633FF] text-[#6633FF] font-semibold text-[14px] rounded-lg hover:bg-[#6633FF] hover:text-white transition-all"
     >
       Start
     </button>

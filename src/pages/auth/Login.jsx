@@ -25,9 +25,9 @@ const Login = () => {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center bg-[#F8FAFC]">
-      <div className="w-full max-w-[571px] flex flex-col items-center gap-6 px-4">
+      <div className="w-full max-w-142.75 flex flex-col items-center gap-6 px-4">
         {/* Title */}
-        <h2 className="font-semibold text-[32px] leading-[130%] text-[#334155]">
+        <h2 className="font-semibold text-[24px] leading-[130%] text-[#334155]">
           Sign In
         </h2>
 
@@ -46,7 +46,7 @@ const Login = () => {
 
             {/* Email */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-[#475569]">
+              <label className="text-[14px] font-medium text-[#334155]">
                 Email
               </label>
               <input
@@ -65,7 +65,7 @@ const Login = () => {
 
             {/* Password */}
             <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium text-[#475569]">
+              <label className="text-[14px] font-medium text-[#334155]">
                 Password
               </label>
               <input
@@ -83,7 +83,7 @@ const Login = () => {
               <div className="flex justify-end">
                 <button
                   type="button"
-                  className="text-xs text-[#6633FF] font-medium hover:underline"
+                  className="cursor-pointer text-[14px] text-[#334155] font-medium hover:underline"
                 >
                   Forget Password?
                 </button>
@@ -94,7 +94,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 bg-[#6633FF] text-white font-semibold text-base rounded-lg hover:bg-[#5522EE] transition-all mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="cursor-pointer w-full h-12 bg-[#6633FF] text-white font-semibold text-base rounded-lg hover:bg-[#5522EE] transition-all mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {loading ? "Signing in..." : "Submit"}
             </button>

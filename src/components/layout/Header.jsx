@@ -16,7 +16,7 @@ function Header({ pageTitle }) {
 
   return (
     <header className="relative w-full h-16 lg:h-20 bg-white shadow-[0px_2.71px_4.4px_0px_#C0C0C007,0px_6.86px_11.12px_0px_#C0C0C00A,0px_14px_22.68px_0px_#C0C0C00C,0px_28.84px_46.72px_0px_#C0C0C00F,0px_79px_128px_0px_#C0C0C017]">
-      <div className="max-w-7xl w-full h-full mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-7xl w-full h-full mx-auto flex items-center justify-between">
         {/* Left — Logo */}
         <div className="w-32 md:w-40">
           <img
@@ -51,11 +51,11 @@ function Header({ pageTitle }) {
                     <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
                   </svg>
                 </div>
-                <div className="flex flex-col leading-tight">
-                  <span className="text-sm font-semibold text-[#334155]">
+                <div className="flex flex-col leading-tight w-25">
+                  <span className="text-[14px] font-semibold text-[#334155]">
                     {user.name}
                   </span>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-[12px] text-[#64748B]">
                     Ref. ID - {user.refId}
                   </span>
                 </div>

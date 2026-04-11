@@ -3,7 +3,7 @@ import Footer from "./Footer";
 
 function Layout({ children, pageTitle }) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-[Inter] bg-[#F8F9FA]">
       <Header pageTitle={pageTitle} />
       <main className="flex-1 flex flex-col">{children}</main>
       <Footer />

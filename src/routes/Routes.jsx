@@ -35,7 +35,7 @@ function AppRoutes() {
         path="/employer/manage-test/basic-info"
         element={
           <ProtectedRoute allowedRole="employer">
-            <Layout pageTitle="Manage Online Test">
+            <Layout pageTitle="Online Test">
               <BasicInfo />
             </Layout>
           </ProtectedRoute>
