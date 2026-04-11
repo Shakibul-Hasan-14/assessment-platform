@@ -52,7 +52,7 @@ const EmployerDashboard = () => {
           </div>
 
           <button
-            onClick={() => navigate("/employer/manage-test")}
+            onClick={() => navigate("/employer/manage-test/basic-info")}
             className="h-[48px] px-[24px] bg-[#6633FF] text-white font-semibold text-[16px] rounded-[12px] hover:bg-[#5522EE] transition-all"
           >
             Create Online Test
