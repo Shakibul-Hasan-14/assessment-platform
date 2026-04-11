@@ -6,7 +6,7 @@ A simplified Online Assessment Platform built as a frontend engineering task. Th
 
 ## Live Demo
 
-> Coming Soon
+[> https://shakib-assessment-platform.vercel.app/login](https://shakib-assessment-platform.vercel.app/login)
 
 ---
 
@@ -18,16 +18,16 @@ A simplified Online Assessment Platform built as a frontend engineering task. Th
 
 ## Tech Stack
 
-| Category | Technology |
-|---|---|
-| Framework | React 18 (Vite) |
-| Styling | Tailwind CSS v4 |
-| State Management | Redux Toolkit |
-| Forms | React Hook Form |
-| Validation | Zod |
-| API Handling | Axios |
-| Mock API | Mock Service Worker (MSW) |
-| Routing | React Router DOM v6 |
+| Category         | Technology                |
+| ---------------- | ------------------------- |
+| Framework        | React 18 (Vite)           |
+| Styling          | Tailwind CSS v4           |
+| State Management | Redux Toolkit             |
+| Forms            | React Hook Form           |
+| Validation       | Zod                       |
+| API Handling     | Axios                     |
+| Mock API         | Mock Service Worker (MSW) |
+| Routing          | React Router DOM v6       |
 
 ---
 
@@ -56,6 +56,7 @@ src/
 ## Features
 
 ### Employer Panel
+
 - Login with role-based redirect
 - Dashboard with exam cards, search, and pagination
 - Create Online Test — Step 1: Basic Info (multi-field form with validation)
@@ -64,6 +65,7 @@ src/
 - Dynamic option builder with variable number of options
 
 ### Candidate Panel
+
 - Login with role-based redirect
 - Dashboard with available exam cards, search, and pagination
 - Exam Screen with live countdown timer
@@ -79,6 +81,7 @@ src/
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js v18 or higher
 - npm v9 or higher
 
@@ -106,9 +109,9 @@ The app will be available at `http://localhost:5173`
 
 ## Mock Credentials
 
-| Role | Email | Password |
-|---|---|---|
-| Employer | employer@akij.com | password123 |
+| Role      | Email              | Password    |
+| --------- | ------------------ | ----------- |
+| Employer  | employer@akij.com  | password123 |
 | Candidate | candidate@akij.com | password123 |
 
 ---
