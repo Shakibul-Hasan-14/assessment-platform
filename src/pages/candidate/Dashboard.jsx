@@ -1,19 +1,34 @@
-import React from "react";
+import useCandidateTests from "../../hooks/useCandidateTests";
 
 const CandidateDashboard = () => {
+  const {
+    tests,
+    loading,
+    error,
+    search,
+    setSearch,
+    page,
+    setPage,
+    totalPages,
+    handleStartTest,
+  } = useCandidateTests();
+
   return (
     <div className="flex-1 bg-[#F8FAFC] px-20 py-10 flex flex-col gap-8">
-      {/* Search Header Area */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-['Inter'] font-semibold text-[24px] leading-[130%] text-[#334155]">
+        <h2 className="font-semibold text-[24px] leading-[130%] text-[#334155]">
           Online Tests
         </h2>
-
-        {/* Search Bar matching the Employer Dashboard */}
         <div className="relative">
           <input
             type="text"
             placeholder="Search by exam title"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
             className="w-[430px] h-[48px] pl-[16px] pr-[44px] rounded-[12px] border border-[#E5E7EB] bg-white focus:outline-none focus:border-[#6633FF] text-[14px] placeholder:text-[#94A3B8]"
           />
           <div className="absolute right-[16px] top-1/2 -translate-y-1/2 text-[#6633FF]">
@@ -34,84 +49,120 @@ const CandidateDashboard = () => {
         </div>
       </div>
 
-      {/* Grid of Candidate Test Cards */}
-      <div className="grid grid-cols-2 gap-[24px]">
-        {[1, 2, 3, 4].map((i) => (
-          <CandidateTestCard
-            key={i}
-            title="Psychometric Test for Management Trainee Officer"
-            duration="30 min"
-            questions="20"
-            negativeMarking="-0.25/wrong"
-          />
-        ))}
-      </div>
+      {/* States */}
+      {loading && (
+        <div className="flex-1 flex items-center justify-center text-[#94A3B8] text-sm">
+          Loading tests...
+        </div>
+      )}
 
-      {/* Pagination Footer */}
-      <div className="flex justify-between items-center mt-4">
-        <div className="flex gap-2">
-          <button className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400">
-            {"<"}
-          </button>
-          <button className="w-8 h-8 flex items-center justify-center border border-[#6633FF] rounded bg-white text-[#6633FF] font-bold">
-            1
-          </button>
-          <button className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400">
-            {">"}
-          </button>
+      {error && (
+        <div className="w-full px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+          {error}
         </div>
-        <div className="text-[14px] text-[#64748B]">
-          Online Test Per Page{" "}
-          <span className="ml-2 font-semibold border px-2 py-1 rounded inline-flex items-center gap-1 bg-white cursor-pointer">
-            8 <span className="text-[10px]">▼</span>
-          </span>
+      )}
+
+      {!loading && !error && tests.length === 0 && (
+        <div className="flex-1 flex items-center justify-center text-[#94A3B8] text-sm">
+          No tests available.
         </div>
-      </div>
+      )}
+
+      {/* Cards */}
+      {!loading && !error && tests.length > 0 && (
+        <div className="grid grid-cols-2 gap-[24px]">
+          {tests.map((test) => (
+            <CandidateTestCard
+              key={test.id}
+              title={test.title}
+              duration={test.duration ? `${test.duration} min` : "N/A"}
+              questions={test.totalQuestions ?? "N/A"}
+              negativeMarking={
+                test.negativeMarking ? `${test.negativeMarking}/wrong` : "N/A"
+              }
+              onStart={() => handleStartTest(test.id)}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40"
+            >
+              {"<"}
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPage(p)}
+                className={`w-8 h-8 flex items-center justify-center border rounded font-bold text-sm
+                  ${page === p ? "border-[#6633FF] text-[#6633FF]" : "border-[#E5E7EB] text-gray-400 bg-white"}`}
+              >
+                {p}
+              </button>
+            ))}
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40"
+            >
+              {">"}
+            </button>
+          </div>
+          <div className="text-[14px] text-[#64748B]">
+            Online Test Per Page
+            <span className="ml-2 font-semibold border px-2 py-1 rounded inline-flex items-center gap-1 bg-white cursor-pointer">
+              8 <span className="text-[10px]">▼</span>
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-const CandidateTestCard = ({ title, duration, questions, negativeMarking }) => (
+const CandidateTestCard = ({
+  title,
+  duration,
+  questions,
+  negativeMarking,
+  onStart,
+}) => (
   <div className="bg-white border border-[#E5E7EB] rounded-[16px] p-[24px] flex flex-col gap-[20px] shadow-sm hover:shadow-md transition-shadow">
-    <h3 className="font-['Inter'] font-semibold text-[18px] leading-[140%] text-[#334155]">
+    <h3 className="font-semibold text-[18px] leading-[140%] text-[#334155]">
       {title}
     </h3>
-
     <div className="flex items-center gap-[24px] text-[14px] text-[#64748B]">
-      {/* Duration */}
       <div className="flex items-center gap-[6px]">
-        <div className="w-5 h-5 flex items-center justify-center border border-gray-300 rounded-full text-[10px]">
-          🕒
-        </div>
+        <span>🕒</span>
         <span>
           Duration: <strong className="text-[#334155]">{duration}</strong>
         </span>
       </div>
-
-      {/* Questions */}
       <div className="flex items-center gap-[6px]">
-        <div className="w-5 h-5 flex items-center justify-center border border-gray-300 rounded-full text-[10px]">
-          📄
-        </div>
+        <span>📄</span>
         <span>
           Question: <strong className="text-[#334155]">{questions}</strong>
         </span>
       </div>
-
-      {/* Negative Marking */}
       <div className="flex items-center gap-[6px]">
-        <div className="w-5 h-5 flex items-center justify-center border border-gray-300 rounded-full text-[10px]">
-          ✖
-        </div>
+        <span>✖</span>
         <span>
           Negative Marking:{" "}
           <strong className="text-[#334155]">{negativeMarking}</strong>
         </span>
       </div>
     </div>
-
-    {/* Start Button: Matching Figma's outline style */}
-    <button className="w-[140px] h-[40px] border border-[#6633FF] text-[#6633FF] font-semibold text-[14px] rounded-[8px] hover:bg-[#6633FF] hover:text-white transition-all">
+    <button
+      onClick={onStart}
+      className="w-[140px] h-[40px] border border-[#6633FF] text-[#6633FF] font-semibold text-[14px] rounded-[8px] hover:bg-[#6633FF] hover:text-white transition-all"
+    >
       Start
     </button>
   </div>
