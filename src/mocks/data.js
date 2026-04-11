@@ -9,15 +9,64 @@ export const users = [
   },
   {
     id: 2,
-    name: "M. Rafiul Alam",
-    refId: "16101122",
+    name: "Rafiul Alam",
+    refId: "1610112",
     email: "candidate@akij.com",
     password: "password123",
     role: "candidate",
   },
 ];
 
-export const tests = [];
+export const tests = [
+  {
+    id: 1,
+    title: "Psychometric Test for Management Trainee Officer 4",
+    totalCandidates: 140,
+    totalSlots: 40,
+    totalExams: 3,
+    questionType: "mcq",
+    startTime: "2026-04-15T09:00:00",
+    endTime: "2026-04-15T11:00:00",
+    duration: 30,
+    negativeMarking: -0.25,
+  },
+  {
+    id: 2,
+    title: "Psychometric Test for Management Trainee Officer 3",
+    totalCandidates: 140,
+    totalSlots: 40,
+    totalExams: 3,
+    questionType: "mcq",
+    startTime: "2026-04-15T09:00:00",
+    endTime: "2026-04-15T11:00:00",
+    duration: 30,
+    negativeMarking: -0.25,
+  },
+  {
+    id: 3,
+    title: "Psychometric Test for Management Trainee Officer 2",
+    totalCandidates: 140,
+    totalSlots: 40,
+    totalExams: 3,
+    questionType: "mcq",
+    startTime: "2026-04-15T09:00:00",
+    endTime: "2026-04-15T11:00:00",
+    duration: 30,
+    negativeMarking: -0.25,
+  },
+  {
+    id: 4,
+    title: "Psychometric Test for Management Trainee Officer 1",
+    totalCandidates: 140,
+    totalSlots: 40,
+    totalExams: 3,
+    questionType: "mcq",
+    startTime: "2026-04-15T09:00:00",
+    endTime: "2026-04-15T11:00:00",
+    duration: 30,
+    negativeMarking: -0.25,
+  },
+];
 
 export const questions = {
   1: [

@@ -1,4 +1,5 @@
 import useCandidateTests from "../../hooks/useCandidateTests";
+import CandidateTestCard from "../../components/candidate/TestCard";
 
 const CandidateDashboard = () => {
   const {
@@ -14,13 +15,15 @@ const CandidateDashboard = () => {
   } = useCandidateTests();
 
   return (
-    <div className="flex-1 bg-[#F8FAFC] px-20 py-10 flex flex-col gap-8">
+    <div className="max-w-7xl w-full mx-auto flex-1 py-10 flex flex-col gap-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-[24px] leading-[130%] text-[#334155]">
           Online Tests
         </h2>
-        <div className="relative">
+
+        {/* Gradient border search */}
+        <div className="relative p-px rounded-xl bg-linear-to-r from-[#A086F7] via-[#ECDBFF] via-[15.72%] to-[#B199FF]">
           <input
             type="text"
             placeholder="Search by exam title"
@@ -29,7 +32,7 @@ const CandidateDashboard = () => {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-107.5 h-12 pl-4 pr-11 rounded-xl border border-[#E5E7EB] bg-white focus:outline-none focus:border-[#6633FF] text-[14px] placeholder:text-[#94A3B8]"
+            className="w-155.25 h-12 pl-4 pr-11 rounded-[11px] bg-white focus:outline-none text-[14px] placeholder:text-[#94A3B8] block"
           />
           <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6633FF]">
             <svg
@@ -49,22 +52,37 @@ const CandidateDashboard = () => {
         </div>
       </div>
 
-      {/* States */}
+      {/* Loading */}
       {loading && (
         <div className="flex-1 flex items-center justify-center text-[#94A3B8] text-sm">
           Loading tests...
         </div>
       )}
 
+      {/* Error */}
       {error && (
         <div className="w-full px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
           {error}
         </div>
       )}
 
+      {/* Empty state */}
       {!loading && !error && tests.length === 0 && (
-        <div className="flex-1 flex items-center justify-center text-[#94A3B8] text-sm">
-          No tests available.
+        <div className="h-60 bg-white rounded-lg p-5">
+          <div className="flex flex-col items-center justify-center text-[#334155] h-full gap-3">
+            <img
+              src="/icons/no-data.svg"
+              alt="No Data"
+              className="h-30 aspect-square"
+            />
+            <span className="font-semibold text-[20px] leading-[140%]">
+              No Online Test Available
+            </span>
+            <span className="text-[14px] text-[#64748B]">
+              Currently, there are no online tests available. Please check back
+              later for updates.
+            </span>
+          </div>
         </div>
       )}
 
@@ -87,38 +105,52 @@ const CandidateDashboard = () => {
       )}
 
       {/* Pagination */}
-      {totalPages > 1 && (
+      {!loading && !error && tests.length > 0 && (
         <div className="flex justify-between items-center mt-4">
           <div className="flex gap-2">
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
-              disabled={page === 1}
-              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40"
+              disabled={page <= 1}
+              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
             >
               {"<"}
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                onClick={() => setPage(p)}
-                className={`w-8 h-8 flex items-center justify-center border rounded font-bold text-sm
-                  ${page === p ? "border-[#6633FF] text-[#6633FF]" : "border-[#E5E7EB] text-gray-400 bg-white"}`}
-              >
-                {p}
+
+            {totalPages <= 0 ? (
+              <button className="w-8 h-8 flex items-center justify-center border border-[#6633FF] rounded font-bold text-sm text-[#6633FF]">
+                1
               </button>
-            ))}
+            ) : (
+              Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-8 h-8 flex items-center justify-center border rounded font-bold text-sm cursor-pointer
+                    ${page === p ? "border-[#6633FF] text-[#6633FF]" : "border-[#E5E7EB] text-gray-400 bg-white"}`}
+                >
+                  {p}
+                </button>
+              ))
+            )}
+
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-              disabled={page === totalPages}
-              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40"
+              disabled={page >= totalPages || totalPages <= 1}
+              className="w-8 h-8 flex items-center justify-center border border-[#E5E7EB] rounded bg-white text-gray-400 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
             >
               {">"}
             </button>
           </div>
-          <div className="text-[14px] text-[#64748B]">
+
+          <div className="flex text-[14px] text-[#666666] items-center">
             Online Test Per Page
-            <span className="ml-2 font-semibold border px-2 py-1 rounded inline-flex items-center gap-1 bg-white cursor-pointer">
-              8 <span className="text-[10px]">▼</span>
+            <span className="flex ml-2 font-semibold p-1 rounded bg-white items-center gap-2.5 px-2.5">
+              8
+              <img
+                src="/icons/up-arrow.svg"
+                alt="Up Arrow"
+                className="h-4 aspect-square"
+              />
             </span>
           </div>
         </div>
@@ -126,46 +158,5 @@ const CandidateDashboard = () => {
     </div>
   );
 };
-
-const CandidateTestCard = ({
-  title,
-  duration,
-  questions,
-  negativeMarking,
-  onStart,
-}) => (
-  <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col gap-5 shadow-sm hover:shadow-md transition-shadow">
-    <h3 className="font-semibold text-[18px] leading-[140%] text-[#334155]">
-      {title}
-    </h3>
-    <div className="flex items-center gap-6 text-[14px] text-[#64748B]">
-      <div className="flex items-center gap-1.5">
-        <span>🕒</span>
-        <span>
-          Duration: <strong className="text-[#334155]">{duration}</strong>
-        </span>
-      </div>
-      <div className="flex items-center gap-1.5">
-        <span>📄</span>
-        <span>
-          Question: <strong className="text-[#334155]">{questions}</strong>
-        </span>
-      </div>
-      <div className="flex items-center gap-1.5">
-        <span>✖</span>
-        <span>
-          Negative Marking:{" "}
-          <strong className="text-[#334155]">{negativeMarking}</strong>
-        </span>
-      </div>
-    </div>
-    <button
-      onClick={onStart}
-      className="w-35 h-10 border border-[#6633FF] text-[#6633FF] font-semibold text-[14px] rounded-lg hover:bg-[#6633FF] hover:text-white transition-all"
-    >
-      Start
-    </button>
-  </div>
-);
 
 export default CandidateDashboard;

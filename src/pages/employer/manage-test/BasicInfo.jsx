@@ -1,33 +1,50 @@
 import { useNavigate } from "react-router-dom";
 import useBasicInfo from "../../../hooks/useBasicInfo";
+import FormInput from "../../../components/ui/FormInput";
+import FormSelect from "../../../components/ui/FormSelect";
 
 const BasicInfo = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, onSubmit, errors, getDuration } =
-    useBasicInfo();
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    errors,
+    getDuration,
+    basicInfo,
+    isViewMode,
+  } = useBasicInfo();
 
   return (
     <div className="flex-1 bg-[#F8FAFC] px-20 py-8 flex flex-col gap-6">
       {/* Header Card */}
       <div className="max-w-7xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col gap-6">
-        <div className="flex justify-between items-center">
-          <h2 className="text-[20px] font-semibold text-[#334155]">
-            Manage Online Test
-          </h2>
-        </div>
+        <h2 className="text-[20px] font-semibold text-[#334155]">
+          Manage Online Test
+        </h2>
 
         {/* Stepper */}
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div className="flex items-center gap-10">
-            <div className="flex items-center gap-3">
+            {/* Step 1 */}
+            <button
+              type="button"
+              onClick={() =>
+                navigate("/employer/manage-test/basic-info?mode=view")
+              }
+              className="flex items-center gap-3"
+            >
               <div className="w-8 h-8 bg-[#6633FF] text-white rounded-full flex items-center justify-center font-bold text-[14px]">
                 1
               </div>
               <span className="text-[#6633FF] font-semibold text-[14px]">
                 Basic Info
               </span>
-            </div>
+            </button>
+
             <div className="h-px w-16 bg-[#E5E7EB]" />
+
+            {/* Step 2 */}
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-[#E2E8F0] text-[#64748B] rounded-full flex items-center justify-center font-bold text-[14px]">
                 2
@@ -46,195 +63,192 @@ const BasicInfo = () => {
         </div>
       </div>
 
-      {/* Form Card */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="max-w-238.5 w-full mx-auto bg-white border-[#E5E7EB] rounded-2xl overflow-hidden">
-          <div className="p-8">
-            <h3 className="text-[18px] font-semibold text-[#334155] mb-6">
-              Basic Information
-            </h3>
+      {/* View Mode */}
+      {isViewMode && basicInfo ? (
+        <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">
+          <div className="p-8 flex flex-col gap-6">
+            {/* View Header */}
+            <div className="flex justify-between items-center">
+              <h3 className="text-[18px] font-semibold text-[#334155]">
+                Basic Information
+              </h3>
+              <button
+                onClick={() => navigate("/employer/manage-test/basic-info")}
+                className="cursor-pointer flex items-center gap-2 text-[#6633FF] font-medium text-[14px] hover:underline"
+              >
+                ✎ Edit
+              </button>
+            </div>
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-5">
-              {/* Title */}
-              <div className="col-span-2 flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Online Test Title <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter online test title"
-                  {...register("title")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-                    ${errors.title ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
-                />
-                {errors.title && (
-                  <span className="text-xs text-red-500">
-                    {errors.title.message}
-                  </span>
-                )}
-              </div>
+            {/* Summary Grid */}
+            <div className="grid grid-cols-4 gap-y-8">
+              <SummaryItem
+                label="Online Test Title"
+                value={basicInfo.title}
+                fullWidth
+              />
+              <SummaryItem
+                label="Total Candidates"
+                value={basicInfo.totalCandidates}
+              />
+              <SummaryItem label="Total Slots" value={basicInfo.totalSlots} />
+              <SummaryItem
+                label="Total Question Set"
+                value={basicInfo.totalExams}
+              />
+              <SummaryItem
+                label="Duration Per Slots (Minutes)"
+                value={getDuration()}
+              />
+              <SummaryItem
+                label="Question Type"
+                value={basicInfo.questionType?.toUpperCase()}
+              />
+            </div>
+          </div>
 
-              {/* Total Candidates */}
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Total Candidates <span className="text-red-500">*</span>
-                </label>
-                <input
+          {/* Footer */}
+          <div className="px-8 py-6 border-t border-[#E5E7EB] flex justify-end">
+            <button
+              onClick={() => navigate("/employer/manage-test/questions")}
+              className="cursor-pointer px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
+            >
+              Continue to Questions
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* Edit Mode */
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl overflow-hidden">
+            <div className="p-8 flex flex-col gap-6">
+              <h3 className="text-[18px] font-semibold text-[#334155]">
+                Basic Information
+              </h3>
+
+              <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+                <div className="col-span-2">
+                  <FormInput
+                    label="Online Test Title"
+                    type="text"
+                    placeholder="Enter online test title"
+                    error={errors.title?.message}
+                    required
+                    {...register("title")}
+                  />
+                </div>
+
+                <FormInput
+                  label="Total Candidates"
                   type="number"
                   placeholder="Enter total candidates"
+                  error={errors.totalCandidates?.message}
+                  required
                   {...register("totalCandidates")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-                    ${errors.totalCandidates ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
                 />
-                {errors.totalCandidates && (
-                  <span className="text-xs text-red-500">
-                    {errors.totalCandidates.message}
-                  </span>
-                )}
-              </div>
 
-              {/* Total Slots */}
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Total Slots <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="number"
-                  placeholder="Enter total slots"
+                <FormSelect
+                  label="Total Slots"
+                  error={errors.totalSlots?.message}
+                  required
                   {...register("totalSlots")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-                    ${errors.totalSlots ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
-                />
-                {errors.totalSlots && (
-                  <span className="text-xs text-red-500">
-                    {errors.totalSlots.message}
-                  </span>
-                )}
-              </div>
+                >
+                  <option value="">Select total slots</option>
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </FormSelect>
 
-              {/* Total Question Sets */}
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Total Question Set <span className="text-red-500">*</span>
-                </label>
-                <input
+                <FormInput
+                  label="Total Question Set"
                   type="number"
                   placeholder="Enter total question sets"
+                  error={errors.totalExams?.message}
+                  required
                   {...register("totalExams")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-                    ${errors.totalExams ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
                 />
-                {errors.totalExams && (
-                  <span className="text-xs text-red-500">
-                    {errors.totalExams.message}
-                  </span>
-                )}
-              </div>
 
-              {/* Question Type */}
-              <div className="flex flex-col gap-2 relative">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Question Type <span className="text-red-500">*</span>
-                </label>
-                <select
+                <FormSelect
+                  label="Question Type"
+                  error={errors.questionType?.message}
+                  required
                   {...register("questionType")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none bg-white appearance-none transition-all
-                    ${errors.questionType ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
                 >
                   <option value="">Select question type</option>
                   <option value="mcq">MCQ</option>
                   <option value="checkbox">Checkbox</option>
                   <option value="paragraph">Paragraph</option>
-                </select>
-
-                <img
-                  src="/icons/arrow-down.svg"
-                  alt="Dropdown"
-                  className="h-6 aspect-square absolute right-4 bottom-3  pointer-events-none"
-                />
-                {errors.questionType && (
-                  <span className="text-xs text-red-500">
-                    {errors.questionType.message}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-5 gap-x-6 gap-y-5 mt-5">
-              {/* Start Time */}
-              <div className="flex flex-col gap-2 col-span-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Start Time <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="time"
-                  {...register("startTime")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-      ${errors.startTime ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
-                />
-                {errors.startTime && (
-                  <span className="text-xs text-red-500">
-                    {errors.startTime.message}
-                  </span>
-                )}
+                </FormSelect>
               </div>
 
-              {/* End Time */}
-              <div className="flex flex-col gap-2 col-span-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  End Time <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="time"
-                  {...register("endTime")}
-                  className={`w-full h-12 px-4 rounded-xl border outline-none transition-all
-      ${errors.endTime ? "border-red-400" : "border-[#E5E7EB] focus:border-[#6633FF]"}`}
-                />
-                {errors.endTime && (
-                  <span className="text-xs text-red-500">
-                    {errors.endTime.message}
-                  </span>
-                )}
-              </div>
-
-              {/* Duration — auto calculated */}
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-[#475569]">
-                  Duration
-                </label>
-                <input
-                  disabled
-                  type="text"
-                  value={getDuration()}
-                  placeholder="Duration  Time"
-                  className="w-full h-12 px-4 rounded-xl bg-gray-50 border border-[#E5E7EB] text-[#94A3B8]"
-                />
+              <div className="grid grid-cols-5 gap-x-6">
+                <div className="col-span-2">
+                  <FormInput
+                    label="Start Time"
+                    type="time"
+                    error={errors.startTime?.message}
+                    required
+                    {...register("startTime")}
+                  />
+                </div>
+                <div className="col-span-2">
+                  <FormInput
+                    label="End Time"
+                    type="time"
+                    error={errors.endTime?.message}
+                    required
+                    {...register("endTime")}
+                  />
+                </div>
+                <div className="col-span-1">
+                  <FormInput
+                    label="Duration"
+                    type="text"
+                    value={getDuration()}
+                    placeholder="Duration Time"
+                    disabled
+                    readOnly
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div className="max-w-238.5 w-full mx-auto bg-white border-[#E5E7EB] rounded-2xl overflow-hidden mt-6">
-          <div className="px-8 py-6 bg-white  border-[#E5E7EB] flex justify-between pt-6">
+          {/* Footer */}
+          <div className="max-w-5xl w-full mx-auto bg-white border border-[#E5E7EB] rounded-2xl px-8 py-6 flex justify-between">
             <button
               type="button"
               onClick={() => navigate("/employer/dashboard")}
-              className="px-12 py-3 border border-[#E5E7EB] rounded-xl text-[#475569] font-semibold hover:bg-gray-50"
+              className="cursor-pointer px-12 py-3 border border-[#E5E7EB] rounded-xl text-[#475569] font-semibold hover:bg-gray-50 transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
+              className="cursor-pointer px-12 py-3 bg-[#6633FF] text-white rounded-xl font-semibold hover:bg-[#5522EE] transition-all"
             >
               Save & Continue
             </button>
           </div>
-        </div>
-      </form>
+        </form>
+      )}
     </div>
   );
 };
+
+const SummaryItem = ({ label, value, fullWidth }) => (
+  <div
+    className={`${fullWidth ? "col-span-4" : "col-span-1"} flex flex-col gap-1`}
+  >
+    <span className="text-[14px] text-[#94A3B8] font-medium tracking-wider">
+      {label}
+    </span>
+    <span className="text-[16px] text-[#334155] font-semibold">
+      {value || "—"}
+    </span>
+  </div>
+);
 
 export default BasicInfo;

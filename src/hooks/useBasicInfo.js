@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,19 +7,34 @@ import { setBasicInfo, setCurrentTestId } from "../store/manageTestSlice";
 import { addTest } from "../store/testsSlice";
 import { createTest } from "../services/testsService";
 
-const schema = z.object({
-  title: z.string().min(1, "Title is required"),
-  totalCandidates: z.coerce.number().min(1, "Total candidates is required"),
-  totalSlots: z.coerce.number().min(1, "Total slots is required"),
-  totalExams: z.coerce.number().min(1, "Total question sets is required"),
-  questionType: z.string().min(1, "Question type is required"),
-  startTime: z.string().min(1, "Start time is required"),
-  endTime: z.string().min(1, "End time is required"),
-});
+const schema = z
+  .object({
+    title: z.string().min(1, "Title is required"),
+    totalCandidates: z.coerce.number().min(1, "Total candidates is required"),
+    totalSlots: z.coerce.number().min(1, "Total slots is required"),
+    totalExams: z.coerce.number().min(1, "Total question sets is required"),
+    questionType: z.string().min(1, "Question type is required"),
+    startTime: z.string().min(1, "Start time is required"),
+    endTime: z.string().min(1, "End time is required"),
+  })
+  .refine(
+    (data) => {
+      if (!data.startTime || !data.endTime) return true;
+      const [sh, sm] = data.startTime.split(":").map(Number);
+      const [eh, em] = data.endTime.split(":").map(Number);
+      return eh * 60 + em > sh * 60 + sm;
+    },
+    {
+      message: "End time must be later than start time",
+      path: ["endTime"],
+    },
+  );
 
 const useBasicInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isViewMode = searchParams.get("mode") === "view";
   const { basicInfo, loading, error } = useSelector(
     (state) => state.manageTest,
   );
@@ -39,17 +54,23 @@ const useBasicInfo = () => {
 
   const getDuration = () => {
     if (!startTime || !endTime) return "";
-    const start = new Date(startTime);
-    const end = new Date(endTime);
-    const diff = Math.round((end - start) / 60000);
-    return diff > 0 ? `${diff} minutes` : "";
+    const [sh, sm] = startTime.split(":").map(Number);
+    const [eh, em] = endTime.split(":").map(Number);
+    const diff = eh * 60 + em - (sh * 60 + sm);
+    return diff > 0 ? `${diff} min` : "";
   };
 
   const onSubmit = async (data) => {
     try {
-      const newTest = await createTest(data);
+      const [sh, sm] = data.startTime.split(":").map(Number);
+      const [eh, em] = data.endTime.split(":").map(Number);
+      const duration = eh * 60 + em - (sh * 60 + sm);
+
+      const payload = { ...data, duration };
+
+      const newTest = await createTest(payload);
       dispatch(addTest(newTest));
-      dispatch(setBasicInfo(data));
+      dispatch(setBasicInfo({ ...data, duration }));
       dispatch(setCurrentTestId(newTest.id));
       navigate("/employer/manage-test/questions");
     } catch (err) {
@@ -66,6 +87,7 @@ const useBasicInfo = () => {
     loading,
     error,
     basicInfo,
+    isViewMode,
   };
 };
 
