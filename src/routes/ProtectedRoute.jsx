@@ -1,12 +1,12 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children, allowedRole }) {
-  // Temporary placeholder — will connect to Redux in stage 3
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, token } = useSelector((state) => state.auth);
 
-  // if (!user) return <Navigate to="/login" replace />;
-  // if (allowedRole && user.role !== allowedRole)
-  //   return <Navigate to="/login" replace />;
+  if (!user || !token) return <Navigate to="/login" replace />;
+  if (allowedRole && user.role !== allowedRole)
+    return <Navigate to="/login" replace />;
 
   return children;
 }
